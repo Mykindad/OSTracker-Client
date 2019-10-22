@@ -16,6 +16,11 @@ public class CommandExecutor {
     }
 
 
+    /**
+     * Combines all exp gains into one command
+     * @param session
+     * @return
+     */
     private static String generateExperienceGainedCommand(Session session){
         String command = "AddExperience;;";
 

@@ -2,11 +2,13 @@ package me.mykindos.client.tracker.command;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * Singleton class for adding commands to the execution queue
+ */
 public class CommandFactory {
 
-    public static ConcurrentLinkedQueue<String> queries = new ConcurrentLinkedQueue<>();
+    public ConcurrentLinkedQueue<String> commands = new ConcurrentLinkedQueue<>();
     private static CommandFactory commandFactory;
-    private static Thread commandThread;
 
     /**
      * Only one instance of CommandFactory to prevent commands being processed multiple times
@@ -19,7 +21,8 @@ public class CommandFactory {
      * @param command Queues a command to be sent to the server
      */
     public void runCommand(String command) {
-        queries.add(command);
+       // System.out.println(command);
+        commands.add(command);
     }
 
     /**

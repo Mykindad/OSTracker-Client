@@ -1,13 +1,17 @@
 package me.mykindos.client.tracker;
 
 import me.mykindos.client.tracker.command.CommandExecutor;
+import me.mykindos.client.tracker.command.CommandFactory;
 import me.mykindos.client.tracker.connection.DataClient;
 import me.mykindos.client.tracker.exceptions.InvalidSetupException;
 import me.mykindos.client.tracker.session.Session;
 import org.osbot.rs07.Bot;
+import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;
+import org.osbot.rs07.script.Script;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Base of entire tracking system
@@ -24,9 +28,10 @@ public class Tracker extends MethodProvider {
 
     /**
      * Creates an instance of the Tracker with bot context
+     *
      * @param bot Bot client
      */
-    public Tracker(Bot bot, String scriptName){
+    public Tracker(Bot bot, String scriptName) {
         exchangeContext(bot);
         this.scriptName = scriptName;
         this.session = new Session(System.currentTimeMillis());
@@ -35,23 +40,25 @@ public class Tracker extends MethodProvider {
     /**
      * @return DataClient Instance
      */
-    public DataClient getServerConnection(){
+    public DataClient getServerConnection() {
         return serverConnection;
     }
 
     /**
      * Establish a connection with the server
+     *
      * @param host IP of the server
      * @param port Port of the server
      * @return Tracker
      * @throws InvalidSetupException
      */
     public Tracker establishConnection(String host, int port) throws InvalidSetupException {
-        if(serverConnection != null){
+        if (serverConnection != null) {
             throw new InvalidSetupException("Connection to server has already been established.");
         }
 
         try {
+            serverConnection = new DataClient(host, port);
             serverConnection.connect();
         } catch (IOException e) {
             enabled = false;
@@ -64,14 +71,15 @@ public class Tracker extends MethodProvider {
 
     /**
      * Instruct the server to connect to the provided MySQL Server
-     * @param host IP of the MySQL Server
+     *
+     * @param host     IP of the MySQL Server
      * @param username MySQL username
      * @param password MySQL Password
      * @return Tracker
      * @throws InvalidSetupException
      */
     public Tracker setupMysql(String host, String username, String password) throws InvalidSetupException {
-        if(serverConnection == null){
+        if (serverConnection == null) {
             throw new InvalidSetupException("You must have an active connection to call this function");
         }
 
@@ -84,13 +92,14 @@ public class Tracker extends MethodProvider {
     /**
      * Optional
      * Creates a user on the provided MySQL connection
+     *
      * @param username Username
      * @param password Password
      * @return Tracker
      * @throws InvalidSetupException
      */
     public Tracker createMySQLUser(String username, String password) throws InvalidSetupException {
-        if(serverConnection == null){
+        if (serverConnection == null) {
             throw new InvalidSetupException("You must have an active connection to call this function");
         }
 
@@ -101,10 +110,11 @@ public class Tracker extends MethodProvider {
 
     /**
      * Set the time in minutes between each update to the server
+     *
      * @param minutes Minutes between each update
      * @return Tracker
      */
-    public Tracker setUpdateInterval(double minutes){
+    public Tracker setUpdateInterval(double minutes) {
         updateInterval = minutes;
         return this;
     }
@@ -115,18 +125,20 @@ public class Tracker extends MethodProvider {
      * - Exp Gained for all Skills
      * - Time Played
      * - Items gained / lost
-     *
+     * <p>
      * Requires a connection to the server
      *
      * @return Tracker
      * @throws InvalidSetupException
      */
     public Tracker start() throws InvalidSetupException {
-        if(serverConnection == null){
+        if (serverConnection == null) {
             throw new InvalidSetupException("You must have an active connection before starting the tracker. Call establishConnection");
         }
 
-        getServerConnection().disconnect(); // Only need an open connection when we are submitting data
+        CommandFactory.getInstance().runCommand("END");
+
+        getExperienceTracker().startAll();
 
         return this;
     }
@@ -134,10 +146,10 @@ public class Tracker extends MethodProvider {
     /**
      * Terminates the Tracker, uploads contents of current session
      */
-    public void stop(){
-        if(serverConnection != null){
-            if(serverConnection.getConnection().isConnected()){
-                serverConnection.disconnect();
+    public void stop() {
+        if (getServerConnection() != null) {
+            if (getServerConnection().getConnection().isConnected()) {
+                getServerConnection().disconnect();
             }
         }
     }

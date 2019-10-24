@@ -21,8 +21,7 @@ public class CommandFactory {
      * @param command Queues a command to be sent to the server
      */
     public void runCommand(String command) {
-       // System.out.println(command);
-        commands.add(command);
+       commands.add(command);
     }
 
     /**

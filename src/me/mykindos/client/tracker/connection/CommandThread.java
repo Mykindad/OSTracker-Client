@@ -37,12 +37,12 @@ public class CommandThread extends Thread {
                 String command = CommandFactory.getInstance().commands.poll();
 
                 if (command != null && !command.equals("")) {
+                    System.out.println(command);
                     outWriter.println(command);
                 }
             }
 
             outWriter.print("END");
-            System.out.println("memess");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

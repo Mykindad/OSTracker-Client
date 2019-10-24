@@ -5,13 +5,12 @@ import me.mykindos.client.tracker.command.CommandFactory;
 import me.mykindos.client.tracker.connection.DataClient;
 import me.mykindos.client.tracker.exceptions.InvalidSetupException;
 import me.mykindos.client.tracker.session.Session;
+import me.mykindos.client.tracker.session.SessionTracker;
 import org.osbot.rs07.Bot;
-import org.osbot.rs07.api.ui.Skill;
 import org.osbot.rs07.script.MethodProvider;
 import org.osbot.rs07.script.Script;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Base of entire tracking system
@@ -19,12 +18,16 @@ import java.util.Arrays;
 public class Tracker extends MethodProvider {
 
 
+    public boolean isRunning = false;
     private DataClient serverConnection;
     private double updateInterval = 60;
-    private boolean mysqlConnected = false;
     private String scriptName;
-    private boolean enabled = true;
-    private Session session;
+    private SessionTracker sessionTracker;
+
+    public boolean mysqlConnected = false;
+    public String mysqlHost;
+    public String mysqlUsername;
+    public String mysqlPassword;
 
     /**
      * Creates an instance of the Tracker with bot context
@@ -34,7 +37,6 @@ public class Tracker extends MethodProvider {
     public Tracker(Bot bot, String scriptName) {
         exchangeContext(bot);
         this.scriptName = scriptName;
-        this.session = new Session(System.currentTimeMillis());
     }
 
     /**
@@ -58,10 +60,10 @@ public class Tracker extends MethodProvider {
         }
 
         try {
-            serverConnection = new DataClient(host, port);
+            serverConnection = new DataClient(this, host, port);
             serverConnection.connect();
         } catch (IOException e) {
-            enabled = false;
+            isRunning = false;
             log("Failed to connect to server. Tracker disabled");
             e.printStackTrace();
         }
@@ -86,6 +88,11 @@ public class Tracker extends MethodProvider {
         CommandExecutor.connectMySQL(host, username, password);
         CommandExecutor.createDatabase(getScriptName());
 
+        mysqlHost = host;
+        mysqlUsername = username;
+        mysqlPassword = password;
+        mysqlConnected = true;
+
         return this;
     }
 
@@ -109,17 +116,6 @@ public class Tracker extends MethodProvider {
     }
 
     /**
-     * Set the time in minutes between each update to the server
-     *
-     * @param minutes Minutes between each update
-     * @return Tracker
-     */
-    public Tracker setUpdateInterval(double minutes) {
-        updateInterval = minutes;
-        return this;
-    }
-
-    /**
      * Starts the tracker
      * Begins tracking:
      * - Exp Gained for all Skills
@@ -135,11 +131,12 @@ public class Tracker extends MethodProvider {
         if (serverConnection == null) {
             throw new InvalidSetupException("You must have an active connection before starting the tracker. Call establishConnection");
         }
-
+        CommandFactory.getInstance().runCommand("AddUser;;"+  getScriptName() + "--" + getClient().getUsername());
         CommandFactory.getInstance().runCommand("END");
 
         getExperienceTracker().startAll();
-
+        sessionTracker = new SessionTracker(this);
+        isRunning = true;
         return this;
     }
 
@@ -147,11 +144,22 @@ public class Tracker extends MethodProvider {
      * Terminates the Tracker, uploads contents of current session
      */
     public void stop() {
+        try {
+            isRunning = false;
+            sessionTracker.endSession();
+            log("Tracker stopping... uploading data");
+            Script.sleep(1000); // Allow time for it to all transfer before cutting the connection
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         if (getServerConnection() != null) {
             if (getServerConnection().getConnection().isConnected()) {
                 getServerConnection().disconnect();
             }
         }
+
+
     }
 
     /**
@@ -159,5 +167,24 @@ public class Tracker extends MethodProvider {
      */
     public String getScriptName() {
         return scriptName;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public double getUpdateInterval() {
+        return updateInterval;
+    }
+
+    /**
+     * Set the time in minutes between each update to the server
+     *
+     * @param minutes Minutes between each update
+     * @return Tracker
+     */
+    public Tracker setUpdateInterval(double minutes) {
+        updateInterval = minutes;
+        return this;
     }
 }

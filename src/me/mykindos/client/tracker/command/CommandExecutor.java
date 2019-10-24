@@ -1,6 +1,10 @@
 package me.mykindos.client.tracker.command;
 
+import me.mykindos.client.tracker.session.ItemData;
 import me.mykindos.client.tracker.session.Session;
+import org.osbot.rs07.api.ui.Skill;
+
+import java.util.Map;
 
 /**
  * Handles the sending of commands to the server
@@ -11,19 +15,52 @@ public class CommandExecutor {
      * Send all data from the current session to the server
      * @param session Current session, determined by interval
      */
-    public static void updateSession(Session session){
-
+    public static void updateSession(String scriptName, String username, Session session){
+     //   CommandFactory.getInstance().runCommand(generateAddItemCommand(scriptName, session));
+        CommandFactory.getInstance().runCommand(generateRunTimeCommand(scriptName, username, session));
+        CommandFactory.getInstance().runCommand(generateExperienceGainedCommand(scriptName, username, session));
+      //  CommandFactory.getInstance().runCommand(generateScriptItemCommand(scriptName, username, session));
     }
 
+    /**
+     * Create RunTime command for the current session
+     * @param session The session
+     * @return Command to run
+     */
+    private static String generateRunTimeCommand(String scriptName, String username, Session session){
+        String command = "AddRunTime;;" + scriptName + "--" +username + "--" + session.getRunTime();
+
+        return command;
+    }
+
+    private static String generateScriptItemCommand(String scriptName, String username, Session session){
+        String command = "AddScriptItem;;" + scriptName + "--" + username + "--";
+        for(ItemData item : session.getItemData()){
+                command += item.getName() + "," + item.getAmount() + "," + item.getStatus() + "!-!";
+        }
+        return command;
+    }
+
+    private static String generateAddItemCommand(String scriptName, Session session){
+        String command = "AddItem;;" + scriptName +  "--";
+        for(ItemData item : session.getItemData()){
+            command += item.getName() + "!-!";
+        }
+        return command;
+    }
 
     /**
      * Combines all exp gains into one command
      * @param session
      * @return
      */
-    private static String generateExperienceGainedCommand(Session session){
-        String command = "AddExperience;;";
-
+    private static String generateExperienceGainedCommand(String scriptName, String username, Session session){
+        String command = "AddExperience;;" + scriptName + "--" +username + "--";
+        for(Map.Entry<Skill, Integer> expMap : session.getExpGained().entrySet()){
+            if(expMap.getValue() > 0){
+                command += expMap.getKey().name() + "," + expMap.getValue() + "!-!";
+            }
+        }
         return command;
     }
 

@@ -5,7 +5,7 @@ import me.mykindos.client.tracker.exceptions.InvalidSetupException;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
-@ScriptManifest(author = "Tom", info = "Cli56ent", name = "Cli56ent", version = 0.1, logo = "")
+@ScriptManifest(author = "Tom", info = "Cli56ent", name = "fakescript", version = 0.1, logo = "")
 public class Main extends Script {
 
 

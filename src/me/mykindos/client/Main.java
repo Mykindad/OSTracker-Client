@@ -15,7 +15,7 @@ public class Main extends Script {
         try {
             tracker = new Tracker(getBot(), getName()).establishConnection("127.0.0.1", 1337) // Mandatory
             .setupMysql("127.0.0.1:3306", "peter", "123") // Mandatory
-           // .createMySQLUser("peter", "A9516254") // Optional
+            //.createMySQLUser("peter", "123") // Optional
             .setUpdateInterval(0.3)
             .start(); // Optional
         } catch (InvalidSetupException e) {

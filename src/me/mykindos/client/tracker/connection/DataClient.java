@@ -28,10 +28,16 @@ public class DataClient {
         this.port = port;
     }
 
+    /**
+     * @return Server IP
+     */
     public String getHost() {
         return host;
     }
 
+    /**
+     * @return Server port
+     */
     public int getPort() {
         return port;
     }
@@ -40,10 +46,14 @@ public class DataClient {
         return connection;
     }
 
+    /**
+     * Establish a connection with the server
+     * Will force close any existing connections if they remain open. (Server will terminate it on the server side anyway)
+     * @throws IOException
+     */
     public void connect() throws IOException {
 
         if (connection != null ) {
-            connection.close();
             commandThread.interrupt();
         }
 
@@ -61,12 +71,18 @@ public class DataClient {
         }
     }
 
+    /**
+     * Interrupt the commandThread, which will then close the connection
+     */
     public void disconnect() {
         if (commandThread != null) {
             commandThread.interrupt();
         }
     }
 
+    /**
+     * @return Tracker
+     */
     public Tracker getTracker(){
         return tracker;
     }

@@ -4,12 +4,10 @@ import me.mykindos.client.tracker.Tracker;
 import me.mykindos.client.tracker.command.CommandExecutor;
 import me.mykindos.client.tracker.command.CommandFactory;
 import org.osbot.rs07.api.ui.Skill;
-import org.osbot.rs07.script.MethodProvider;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.stream.Collectors;
+
 
 /**
  * Manages the session
@@ -48,7 +46,6 @@ public class SessionTracker {
             tracker.getServerConnection().connect();
 
             Arrays.stream(Skill.values()).forEach(s -> {
-                System.out.println("Put " + s.name() + ", " + (tracker.getExperienceTracker().getGainedXP(s) - expPerSkill.get(s)));
                 session.getExpGained().put(s, tracker.getExperienceTracker().getGainedXP(s) - expPerSkill.get(s));
                 expPerSkill.put(s, tracker.getExperienceTracker().getGainedXP(s));
             });
@@ -58,7 +55,7 @@ public class SessionTracker {
             CommandFactory.getInstance().runCommand("END");
 
         } catch (IOException e) {
-            System.out.println("Failed to connect to server... data still being tracked incase connection reestablishes");
+            System.out.println("Failed to connect to server... data still being tracked incase connection reestablishes\n");
             tracker.mysqlConnected = false;
             e.printStackTrace();
         } finally {
@@ -67,10 +64,16 @@ public class SessionTracker {
         }
     }
 
+    /**
+     * @return Tracker
+     */
     public Tracker getTracker() {
         return tracker;
     }
 
+    /**
+     * @return Current session
+     */
     public Session getSession() {
         return session;
     }

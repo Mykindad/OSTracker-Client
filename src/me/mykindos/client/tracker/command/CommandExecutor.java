@@ -13,13 +13,15 @@ public class CommandExecutor {
 
     /**
      * Send all data from the current session to the server
+     * @param scriptName Script name
+     * @param username OSBot username
      * @param session Current session, determined by interval
      */
     public static void updateSession(String scriptName, String username, Session session){
-     //   CommandFactory.getInstance().runCommand(generateAddItemCommand(scriptName, session));
+        CommandFactory.getInstance().runCommand(generateAddItemCommand(scriptName, session));
         CommandFactory.getInstance().runCommand(generateRunTimeCommand(scriptName, username, session));
         CommandFactory.getInstance().runCommand(generateExperienceGainedCommand(scriptName, username, session));
-      //  CommandFactory.getInstance().runCommand(generateScriptItemCommand(scriptName, username, session));
+        CommandFactory.getInstance().runCommand(generateScriptItemCommand(scriptName, username, session));
     }
 
     /**
@@ -33,7 +35,15 @@ public class CommandExecutor {
         return command;
     }
 
+    /**
+     * Generate command to add all received / lost / spent items to the database
+     * @param scriptName Script Name
+     * @param username OSBot username
+     * @param session Session
+     * @return Command to run
+     */
     private static String generateScriptItemCommand(String scriptName, String username, Session session){
+        if(session.getItemData().isEmpty()) return "";
         String command = "AddScriptItem;;" + scriptName + "--" + username + "--";
         for(ItemData item : session.getItemData()){
                 command += item.getName() + "," + item.getAmount() + "," + item.getStatus() + "!-!";
@@ -41,7 +51,14 @@ public class CommandExecutor {
         return command;
     }
 
+    /**
+     * Generate Command to add all items from the current session to the database
+     * @param scriptName Script Name
+     * @param session Session
+     * @return Command to run
+     */
     private static String generateAddItemCommand(String scriptName, Session session){
+        if(session.getItemData().isEmpty()) return "";
         String command = "AddItem;;" + scriptName +  "--";
         for(ItemData item : session.getItemData()){
             command += item.getName() + "!-!";
@@ -55,6 +72,7 @@ public class CommandExecutor {
      * @return
      */
     private static String generateExperienceGainedCommand(String scriptName, String username, Session session){
+        if(!session.getExpGained().entrySet().stream().filter(s -> s.getValue() > 0).findAny().isPresent()) return "";
         String command = "AddExperience;;" + scriptName + "--" +username + "--";
         for(Map.Entry<Skill, Integer> expMap : session.getExpGained().entrySet()){
             if(expMap.getValue() > 0){

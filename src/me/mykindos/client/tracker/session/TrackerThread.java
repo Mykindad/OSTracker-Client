@@ -40,7 +40,7 @@ public class TrackerThread extends Thread {
                             sessionTracker.endSession();
                         }
                     }
-                    Thread.sleep(50);
+                    Thread.sleep(333);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -84,8 +84,7 @@ public class TrackerThread extends Thread {
             oldItem = testCase[i];
 
             if(currentItem != null && oldItem == null){
-                System.out.println(currentItem.getName());
-                //sessionTracker.getSession().getItemData().add(new ItemData(currentItem.getName(), currentItem.getAmount(), "Received"));
+                sessionTracker.getSession().getItemData().add(new ItemData(currentItem.getName(), currentItem.getAmount(), "Received"));
             }else if(currentItem == null && oldItem != null){
                 boolean moved = false;
                 for(int x = 0; x < loopSize; x++){
@@ -104,7 +103,7 @@ public class TrackerThread extends Thread {
                 if(currentItem.getAmount() < oldItem.getAmount()){
                     sessionTracker.getSession().getItemData().add(new ItemData(oldItem.getName(),
                             oldItem.getAmount() - currentItem.getAmount(), "Spent"));
-                }else{
+                }else if(currentItem.getAmount() > oldItem.getAmount()){
                     sessionTracker.getSession().getItemData().add(new ItemData(oldItem.getName(),
                             currentItem.getAmount() - oldItem.getAmount(), "Received"));
                 }

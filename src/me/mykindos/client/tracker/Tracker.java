@@ -169,10 +169,17 @@ public class Tracker extends MethodProvider {
         return scriptName;
     }
 
+    /**
+     * @return True if tracker is currently running
+     */
     public boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Length of time data is tracked for before uploading
+     * @return Time in minutes between each 'session' interval
+     */
     public double getUpdateInterval() {
         return updateInterval;
     }

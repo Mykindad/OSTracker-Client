@@ -42,6 +42,9 @@ public class DataClient {
         return port;
     }
 
+    /**
+     * @return The connection with the server
+     */
     public Socket getConnection() {
         return connection;
     }
@@ -62,6 +65,7 @@ public class DataClient {
         commandThread = new CommandThread(connection);
         commandThread.start();
 
+        // If the server restarts while a script is running, it will attempt to reconnect the server to MySQL
         if(!tracker.mysqlConnected && tracker.isRunning){
             try {
                 tracker.setupMysql(tracker.mysqlHost, tracker.mysqlUsername, tracker.mysqlPassword);

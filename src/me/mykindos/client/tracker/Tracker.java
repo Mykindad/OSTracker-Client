@@ -74,23 +74,18 @@ public class Tracker extends MethodProvider {
     /**
      * Instruct the server to connect to the provided MySQL Server
      *
-     * @param host     IP of the MySQL Server
-     * @param username MySQL username
-     * @param password MySQL Password
      * @return Tracker
      * @throws InvalidSetupException
      */
-    public Tracker setupMysql(String host, String username, String password) throws InvalidSetupException {
+    public Tracker setupMysql() throws InvalidSetupException {
         if (serverConnection == null) {
             throw new InvalidSetupException("You must have an active connection to call this function");
         }
 
-        CommandExecutor.connectMySQL(host, username, password);
+        CommandExecutor.connectMySQL();
         CommandExecutor.createDatabase(getScriptName());
 
-        mysqlHost = host;
-        mysqlUsername = username;
-        mysqlPassword = password;
+
         mysqlConnected = true;
 
         return this;
@@ -99,18 +94,15 @@ public class Tracker extends MethodProvider {
     /**
      * Optional
      * Creates a user on the provided MySQL connection
-     *
-     * @param username Username
-     * @param password Password
      * @return Tracker
      * @throws InvalidSetupException
      */
-    public Tracker createMySQLUser(String username, String password) throws InvalidSetupException {
+    public Tracker createMySQLUser() throws InvalidSetupException {
         if (serverConnection == null) {
             throw new InvalidSetupException("You must have an active connection to call this function");
         }
 
-        CommandExecutor.createMySQLUser(username, password);
+        CommandExecutor.createMySQLUser();
 
         return this;
     }

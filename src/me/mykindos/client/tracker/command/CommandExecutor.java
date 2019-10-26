@@ -95,24 +95,21 @@ public class CommandExecutor {
     /**
      * Send instruction to the server to create a MySQL user if it doesnt already exist
      * Will grant the user full access to any database starting with osbot-
-     * @param username User username
-     * @param password User password
+
      */
-    public static void createMySQLUser(String username, String password){
-        String create = "CreateUser;;" + username + "--" + password;
-        String grant = "GrantPrivileges;;" + username;
+    public static void createMySQLUser(){
+        String create = "CreateUser;;";
+        String grant = "GrantPrivileges;;";
         CommandFactory.getInstance().runCommand(create);
         CommandFactory.getInstance().runCommand(grant);
     }
 
     /**
      * Instruct server to connect to the provided MySQL Server
-     * @param host IP of MySQL Server
-     * @param username MySQL username
-     * @param password MySQL password
+
      */
-    public static void connectMySQL(String host, String username, String password){
-        String command = "ConnectMySQL;;" + host + "--" +username + "--" + password;
+    public static void connectMySQL(){
+        String command = "ConnectMySQL;;";
         CommandFactory.getInstance().runCommand(command);
     }
 

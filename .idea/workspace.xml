@@ -8,9 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="60a8108e-382b-4f65-a37b-e631ee51c638" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/artifacts/S3Test3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/me/mykindos/client/tracker/session/TrackerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/mykindos/client/tracker/session/TrackerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/mykindos/client/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/mykindos/client/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/mykindos/client/tracker/Tracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/mykindos/client/tracker/Tracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/mykindos/client/tracker/command/CommandExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/mykindos/client/tracker/command/CommandExecutor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +67,8 @@
       <workItem from="1571834915459" duration="1906000" />
       <workItem from="1571903482100" duration="15977000" />
       <workItem from="1571999591260" duration="13128000" />
-      <workItem from="1572070450743" duration="832000" />
+      <workItem from="1572070450743" duration="1222000" />
+      <workItem from="1572103326084" duration="525000" />
     </task>
     <task id="LOCAL-00001" summary="progress">
       <created>1571927185760</created>
@@ -117,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572018582264</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fixed spent item tracking">
+      <created>1572071301303</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1572071301303</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -138,6 +147,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="progress" />
+    <MESSAGE value="fixed spent item tracking" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed spent item tracking" />
   </component>
 </project>

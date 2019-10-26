@@ -68,7 +68,7 @@ public class DataClient {
         // If the server restarts while a script is running, it will attempt to reconnect the server to MySQL
         if(!tracker.mysqlConnected && tracker.isRunning){
             try {
-                tracker.setupMysql(tracker.mysqlHost, tracker.mysqlUsername, tracker.mysqlPassword);
+                tracker.setupMysql();
             } catch (InvalidSetupException e) {
                 e.printStackTrace();
             }

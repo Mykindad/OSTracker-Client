@@ -62,7 +62,7 @@ public class TrackerThread extends Thread {
         Item[] currentEquippedItems = tracker.getEquipment().getItems();
 
         if (!tracker.getBank().isOpen() && !tracker.getDepositBox().isOpen() && !tracker.getGrandExchange().isOpen()) {
-            checkItems(currentEquippedItems, 10);
+            checkItems(currentEquippedItems, 11);
             checkItems(currentInventoryItems, 27);
         }
 
@@ -80,10 +80,11 @@ public class TrackerThread extends Thread {
      * @param loopSize Max size of item set (27 for inventory, 10 for equipment)
      */
     private void checkItems(Item[] items, int loopSize) {
-        Item[] testCase = loopSize > 10 ? inventoryItems : equippedItems;
+        Item[] testCase = loopSize > 11 ? inventoryItems : equippedItems;
 
         Item oldItem, currentItem;
         for (int i = 0; i < loopSize; i++) {
+
             currentItem = items[i];
             oldItem = testCase[i];
 

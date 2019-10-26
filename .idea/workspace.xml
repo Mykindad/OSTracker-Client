@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="S3Test3" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="60a8108e-382b-4f65-a37b-e631ee51c638" name="Default Changelist" comment="" />
+    <list default="true" id="60a8108e-382b-4f65-a37b-e631ee51c638" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/S3Test3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/me/mykindos/client/tracker/session/TrackerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/me/mykindos/client/tracker/session/TrackerThread.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,12 +25,17 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1SVvm77xku4aDZix5mzUFsaz7Kp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="D:/Users/tomho/Downloads/osbot 2.5.60.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$USER_HOME$/OSBot/Scripts" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -46,11 +61,83 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1571661733640</updated>
-      <workItem from="1571661736194" duration="5665000" />
+      <workItem from="1571661736194" duration="7111000" />
+      <workItem from="1571729644476" duration="15947000" />
+      <workItem from="1571834915459" duration="1906000" />
+      <workItem from="1571903482100" duration="15977000" />
+      <workItem from="1571999591260" duration="13128000" />
+      <workItem from="1572070450743" duration="832000" />
     </task>
+    <task id="LOCAL-00001" summary="progress">
+      <created>1571927185760</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571927185760</updated>
+    </task>
+    <task id="LOCAL-00002" summary="progress">
+      <created>1572006369372</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1572006369372</updated>
+    </task>
+    <task id="LOCAL-00003" summary="progress">
+      <created>1572006486104</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1572006486104</updated>
+    </task>
+    <task id="LOCAL-00004" summary="progress">
+      <created>1572016829027</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1572016829027</updated>
+    </task>
+    <task id="LOCAL-00005" summary="progress">
+      <created>1572018368097</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1572018368097</updated>
+    </task>
+    <task id="LOCAL-00006" summary="progress">
+      <created>1572018541146</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1572018541146</updated>
+    </task>
+    <task id="LOCAL-00007" summary="progress">
+      <created>1572018582264</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1572018582264</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="progress" />
+    <option name="LAST_COMMIT_MESSAGE" value="progress" />
   </component>
 </project>

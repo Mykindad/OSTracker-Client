@@ -5,7 +5,7 @@ import me.mykindos.client.tracker.exceptions.InvalidSetupException;
 import org.osbot.rs07.script.Script;
 import org.osbot.rs07.script.ScriptManifest;
 
-@ScriptManifest(author = "Tom", info = "Cli56ent", name = "fakescript", version = 0.1, logo = "")
+@ScriptManifest(author = "Tom", info = "test1123", name = "test1234", version = 0.1, logo = "")
 public class Main extends Script {
 
 
@@ -15,8 +15,7 @@ public class Main extends Script {
         try {
             tracker = new Tracker(getBot(), getName()).establishConnection("127.0.0.1", 1337) // Mandatory
             .setupMysql() // Mandatory
-            //.createMySQLUser("peter", "123") // Optional
-            .setUpdateInterval(0.3)
+            .setUpdateInterval(0.3) // Defaults to an hour
             .start(); // Optional
         } catch (InvalidSetupException e) {
             if(tracker != null){

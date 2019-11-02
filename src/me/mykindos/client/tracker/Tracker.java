@@ -91,21 +91,6 @@ public class Tracker extends MethodProvider {
         return this;
     }
 
-    /**
-     * Optional
-     * Creates a user on the provided MySQL connection
-     * @return Tracker
-     * @throws InvalidSetupException
-     */
-    public Tracker createMySQLUser() throws InvalidSetupException {
-        if (serverConnection == null) {
-            throw new InvalidSetupException("You must have an active connection to call this function");
-        }
-
-        CommandExecutor.createMySQLUser();
-
-        return this;
-    }
 
     /**
      * Starts the tracker

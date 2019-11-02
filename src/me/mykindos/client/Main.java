@@ -10,12 +10,13 @@ public class Main extends Script {
 
 
     private Tracker tracker;
+
     @Override
     public void onStart(){
         try {
             tracker = new Tracker(getBot(), getName()).establishConnection("127.0.0.1", 1337) // Mandatory
             .setupMysql() // Mandatory
-            .setUpdateInterval(0.3) // Defaults to an hour
+            .setUpdateInterval(60) // Defaults to an hour
             .start(); // Optional
         } catch (InvalidSetupException e) {
             if(tracker != null){

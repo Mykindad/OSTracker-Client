@@ -23,6 +23,7 @@ public class Tracker extends MethodProvider {
     private double updateInterval = 60;
     private String scriptName;
     private SessionTracker sessionTracker;
+    private boolean mirrorMode;
 
     public boolean mysqlConnected = false;
     public String mysqlHost;
@@ -37,6 +38,7 @@ public class Tracker extends MethodProvider {
     public Tracker(Bot bot, String scriptName) {
         exchangeContext(bot);
         this.scriptName = scriptName;
+        this.mirrorMode = bot.isMirrorMode();
     }
 
     /**
@@ -170,5 +172,17 @@ public class Tracker extends MethodProvider {
     public Tracker setUpdateInterval(double minutes) {
         updateInterval = minutes;
         return this;
+    }
+
+    /**
+     *
+     * @return Session Tracker
+     */
+    public SessionTracker getSessionTracker(){
+        return sessionTracker;
+    }
+
+    public boolean isMirrorMode() {
+        return mirrorMode;
     }
 }

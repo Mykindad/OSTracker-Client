@@ -2,6 +2,7 @@ package me.mykindos.client.tracker.command;
 
 import me.mykindos.client.tracker.session.ItemData;
 import me.mykindos.client.tracker.session.Session;
+
 import org.osbot.rs07.api.ui.Skill;
 
 import java.util.Map;
@@ -22,6 +23,11 @@ public class CommandExecutor {
         CommandFactory.getInstance().runCommand(generateRunTimeCommand(scriptName, username, session));
         CommandFactory.getInstance().runCommand(generateExperienceGainedCommand(scriptName, username, session));
         CommandFactory.getInstance().runCommand(generateScriptItemCommand(scriptName, username, session));
+
+        for(String s : session.getLogs()){
+            CommandFactory.getInstance().runCommand("AddLog;;" + scriptName + "--" + username
+                    +  "--"  + session.getVersion() + "--" + session.isMirrorMode() + "--" + s);
+        }
     }
 
     /**
@@ -46,7 +52,7 @@ public class CommandExecutor {
         if(session.getItemData().isEmpty()) return "";
         String command = "AddScriptItem;;" + scriptName + "--" + username + "--";
         for(ItemData item : session.getItemData()){
-                command += item.getName() + "," + item.getAmount() + "," + item.getStatus() + "!-!";
+            command += item.getName() + "," + item.getAmount() + "," + item.getStatus() + "!-!";
         }
         return command;
     }

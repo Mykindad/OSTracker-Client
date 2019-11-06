@@ -1,5 +1,6 @@
 package me.mykindos.client.tracker.session;
 
+
 import org.osbot.rs07.api.ui.Skill;
 
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ public class Session {
     private List<ItemData> itemData;
     private long startTime;
     private long runTime;
+    private List<String> logs;
+    private double version;
+    private boolean mirrorMode;
+
 
     /**
      * Create a session with the current system time
@@ -25,6 +30,7 @@ public class Session {
         this.startTime = System.currentTimeMillis();
         expGained = new HashMap<>();
         itemData = new ArrayList<>();
+        logs = new ArrayList<>();
     }
 
     /**
@@ -71,5 +77,58 @@ public class Session {
      */
     public List<ItemData> getItemData() {
         return itemData;
+    }
+
+    /**
+     *
+     * @return List of logs, e.g. errors or generic messages
+     */
+    public List<String> getLogs(){
+        return logs;
+    }
+
+    private long lastLogUpload = 0;
+
+    /**
+     * Upload a log to the database
+     * You must call this yourself
+     * @param log Log (e.g. stacktrace or generic message)
+     */
+    public void addLog(String log){
+        if(System.currentTimeMillis() - lastLogUpload > 60_000) {
+            logs.add(log);
+            lastLogUpload = System.currentTimeMillis(); // Prevent upload spam
+        }
+    }
+
+    /**
+     * Set script version for session
+     * @param version Version
+     */
+    public void setVersion(double version){
+        this.version = version;
+    }
+
+    /**
+     * Script version
+     * @return Version of script
+     */
+    public double getVersion(){
+        return version;
+    }
+
+    /**
+     * @return If the client is running mirror mode
+     */
+    public boolean isMirrorMode() {
+        return mirrorMode;
+    }
+
+    /**
+     * Set mirror moed status
+     * @param mirrorMode True if mirror mode
+     */
+    public void setMirrorMode(boolean mirrorMode) {
+        this.mirrorMode = mirrorMode;
     }
 }

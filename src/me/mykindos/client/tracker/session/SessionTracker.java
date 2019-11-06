@@ -29,6 +29,7 @@ public class SessionTracker {
         this.tracker = tracker;
         this.expPerSkill = new HashMap<>();
         session = new Session();
+        session.setMirrorMode(tracker.isMirrorMode());
         Arrays.stream(Skill.values()).forEach(s -> {
             expPerSkill.put(s, 0);
         });

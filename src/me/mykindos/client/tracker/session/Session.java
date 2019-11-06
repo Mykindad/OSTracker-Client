@@ -1,11 +1,11 @@
 package me.mykindos.client.tracker.session;
 
-
 import org.osbot.rs07.api.ui.Skill;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Object for storing all data in the current period.
@@ -80,6 +80,27 @@ public class Session {
     }
 
     /**
+     * Add new item to the session.
+     * Will increment existing entries to prevent mass database entries
+     * @param itemName Item name
+     * @param amount Amount of item
+     * @param status Item status (Received, Lost, Spent)
+     */
+    public void addItem(String itemName, int amount, String status){
+        ListIterator<ItemData> items = itemData.listIterator();
+        while(items.hasNext()){
+            ItemData data = items.next();
+            if(!data.getName().equalsIgnoreCase(itemName)) continue;
+            if(!data.getStatus().equalsIgnoreCase(status)) continue;
+
+            data.setAmount(data.getAmount() + amount);
+            return;
+        }
+
+        itemData.add(new ItemData(itemName, amount, status));
+    }
+
+    /**
      *
      * @return List of logs, e.g. errors or generic messages
      */
@@ -88,13 +109,12 @@ public class Session {
     }
 
     private long lastLogUpload = 0;
-
     /**
      * Upload a log to the database
-     * You must call this yourself
+
      * @param log Log (e.g. stacktrace or generic message)
      */
-    public void addLog(String log){
+    public  void addLog(String log){
         if(System.currentTimeMillis() - lastLogUpload > 60_000) {
             logs.add(log);
             lastLogUpload = System.currentTimeMillis(); // Prevent upload spam
@@ -117,17 +137,10 @@ public class Session {
         return version;
     }
 
-    /**
-     * @return If the client is running mirror mode
-     */
     public boolean isMirrorMode() {
         return mirrorMode;
     }
 
-    /**
-     * Set mirror moed status
-     * @param mirrorMode True if mirror mode
-     */
     public void setMirrorMode(boolean mirrorMode) {
         this.mirrorMode = mirrorMode;
     }

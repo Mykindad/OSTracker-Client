@@ -42,4 +42,12 @@ public class ItemData {
     public int getAmount() {
         return amount;
     }
+
+    /**
+     * Set the amount of the item
+     * @param amount Amount
+     */
+    public void setAmount(int amount){
+        this.amount = amount;
+    }
 }

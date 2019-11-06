@@ -90,19 +90,19 @@ public class TrackerThread extends Thread {
 
             if (currentItem != null && oldItem == null) {
                 if (!wasMoved(currentItem, items, testCase)) {
-                    sessionTracker.getSession().getItemData().add(new ItemData(currentItem.getName(), currentItem.getAmount(), "Received"));
+                    sessionTracker.getSession().addItem(currentItem.getName(), currentItem.getAmount(), "Received");
                 }
             } else if (currentItem == null && oldItem != null) {
                 if (!wasMoved(oldItem, items, testCase)) {
-                    sessionTracker.getSession().getItemData().add(new ItemData(oldItem.getName(), oldItem.getAmount(), "Lost"));
+                    sessionTracker.getSession().addItem(oldItem.getName(), oldItem.getAmount(), "Lost");
                 }
             } else if (currentItem != null && oldItem != null) {
                 if (currentItem.getAmount() < oldItem.getAmount()) {
-                    sessionTracker.getSession().getItemData().add(new ItemData(oldItem.getName(),
-                            oldItem.getAmount() - currentItem.getAmount(), "Spent"));
+                    sessionTracker.getSession().addItem(oldItem.getName(),
+                            oldItem.getAmount() - currentItem.getAmount(), "Spent");
                 } else if (currentItem.getAmount() > oldItem.getAmount()) {
-                    sessionTracker.getSession().getItemData().add(new ItemData(oldItem.getName(),
-                            currentItem.getAmount() - oldItem.getAmount(), "Received"));
+                    sessionTracker.getSession().addItem(oldItem.getName(),
+                            currentItem.getAmount() - oldItem.getAmount(), "Received");
                 }
             }
         }

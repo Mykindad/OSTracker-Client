@@ -14,7 +14,7 @@ public class TrackerThread extends Thread {
 
     private SessionTracker sessionTracker;
     private Item[] inventoryItems, equippedItems;
-
+    private Long interfaceOpenTime;
     /**
      * Create the Tracker Thread
      *
@@ -25,6 +25,7 @@ public class TrackerThread extends Thread {
         this.sessionTracker = tracker;
         inventoryItems = tracker.getTracker().getInventory().getItems();
         equippedItems = tracker.getTracker().getEquipment().getItems();
+        interfaceOpenTime = System.currentTimeMillis();
     }
 
     /**
@@ -61,7 +62,11 @@ public class TrackerThread extends Thread {
         Item[] currentInventoryItems = tracker.getInventory().getItems();
         Item[] currentEquippedItems = tracker.getEquipment().getItems();
 
-        if (!tracker.getBank().isOpen() && !tracker.getDepositBox().isOpen() && !tracker.getGrandExchange().isOpen()) {
+        if(tracker.getBank().isOpen() || tracker.getDepositBox().isOpen() || tracker.getGrandExchange().isOpen()){
+            interfaceOpenTime = System.currentTimeMillis() + 1000;
+        }
+
+        if (interfaceOpenTime - System.currentTimeMillis() <= 0) {
             checkItems(currentEquippedItems, 11);
             checkItems(currentInventoryItems, 27);
         }
@@ -89,12 +94,16 @@ public class TrackerThread extends Thread {
             oldItem = testCase[i];
 
             if (currentItem != null && oldItem == null) {
-                if (!wasMoved(currentItem, items, testCase)) {
-                    sessionTracker.getSession().addItem(currentItem.getName(), currentItem.getAmount(), "Received");
+                if(!changedInventory(currentItem)) {
+                    if (!wasMoved(currentItem, items, testCase)) {
+                        sessionTracker.getSession().addItem(currentItem.getName(), currentItem.getAmount(), "Received");
+                    }
                 }
             } else if (currentItem == null && oldItem != null) {
-                if (!wasMoved(oldItem, items, testCase)) {
-                    sessionTracker.getSession().addItem(oldItem.getName(), oldItem.getAmount(), "Lost");
+                if(!changedInventory(oldItem)) {
+                    if (!wasMoved(oldItem, items, testCase)) {
+                        sessionTracker.getSession().addItem(oldItem.getName(), oldItem.getAmount(), "Lost");
+                    }
                 }
             } else if (currentItem != null && oldItem != null) {
                 if (currentItem.getAmount() < oldItem.getAmount()) {
@@ -124,5 +133,16 @@ public class TrackerThread extends Thread {
         }
 
         return false;
+    }
+
+    private boolean changedInventory(Item item){
+        int countA = (int) Arrays.stream(sessionTracker.getTracker().getInventory().getItems()).filter(f -> f != null && f.getName().equals(item.getName())).count();
+        int countB = (int) Arrays.stream(sessionTracker.getTracker().getEquipment().getItems()).filter(f -> f != null && f.getName().equalsIgnoreCase(item.getName())).count();
+
+        int countC = (int) Arrays.stream(inventoryItems).filter(f -> f != null && f.getName().equals(item.getName())).count();
+        int countD = (int) Arrays.stream(equippedItems).filter(f -> f != null && f.getName().equalsIgnoreCase(item.getName())).count();
+
+
+        return ((countA + countB) == (countC + countD));
     }
 }

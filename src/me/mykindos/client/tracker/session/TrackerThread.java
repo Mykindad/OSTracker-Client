@@ -135,6 +135,11 @@ public class TrackerThread extends Thread {
         return false;
     }
 
+    /**
+     * Determines whether an item was equipped or unequipped
+     * @param item The item to check
+     * @return True if the item moved inventories
+     */
     private boolean changedInventory(Item item){
         int countA = (int) Arrays.stream(sessionTracker.getTracker().getInventory().getItems()).filter(f -> f != null && f.getName().equals(item.getName())).count();
         int countB = (int) Arrays.stream(sessionTracker.getTracker().getEquipment().getItems()).filter(f -> f != null && f.getName().equalsIgnoreCase(item.getName())).count();
